@@ -64,16 +64,3 @@ export const RENDER_TIERS: Record<RenderTier, { dpr: [number, number]; shadowMap
   balanced: { dpr: [1, 1.5], shadowMapSize: 2048, shadows: true },
   high: { dpr: [1, 2], shadowMapSize: 4096, shadows: true },
 };
-
-/** Temporary inspection camera for Phase 2; Phase 3 replaces it with the full camera system. */
-export const INSPECTION_CAMERA = {
-  position: [30, 11, 36] as [number, number, number],
-  /** Portrait screens: higher and more frontal so the sightline clears the garden trees. */
-  portraitPosition: [16, 24, 50] as [number, number, number],
-  target: [-1, 3, 2] as [number, number, number],
-  fov: 38,
-  minDistance: 22,
-  maxDistance: 75,
-  minPolarAngle: 0.25,
-  maxPolarAngle: 1.45,
-};

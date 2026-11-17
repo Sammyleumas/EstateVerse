@@ -46,16 +46,15 @@ const TREES: TreeSpec[] = [
   // Cypress screen behind the residence
   ...Array.from({ length: 13 }, (_, i) => ({ kind: "cypress" as const, x: -24 + i * 3.6, z: -14 - (i % 2) * 0.8, size: 1 + ((i * 37) % 5) * 0.06, seed: i + 1 })),
   { kind: "olive", x: -6.5, z: 13.2, size: 1, seed: 2 },
-  { kind: "olive", x: 24.5, z: 9, size: 1.1, seed: 5 },
+  { kind: "olive", x: 27, z: -12, size: 1.1, seed: 5 },
   { kind: "canopy", x: -24, z: 9, size: 1.1, seed: 3 },
   { kind: "canopy", x: -26, z: 22, size: 1.25, seed: 4 },
-  { kind: "canopy", x: 29, z: -4, size: 1.2, seed: 6 },
+  { kind: "canopy", x: 33, z: -13, size: 1.2, seed: 6 },
   { kind: "canopy", x: 30, z: 18, size: 1, seed: 1 },
-  { kind: "olive", x: 2, z: 26, size: 1.2, seed: 9 },
   // Distant woodland ring for depth; fog softens it into the horizon.
   ...Array.from({ length: 22 }, (_, i) => {
     const angle = (i / 22) * Math.PI * 2 + 0.3;
-    const radius = 62 + ((i * 53) % 7) * 4;
+    const radius = 84 + ((i * 53) % 7) * 4;
     return { kind: "canopy" as const, x: Math.cos(angle) * radius, z: Math.sin(angle) * radius - 4, size: 1.6 + ((i * 29) % 5) * 0.15, seed: i + 10 };
   }),
 ];

@@ -41,7 +41,9 @@ export function Navigation() {
   }, [open]);
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
-  const solid = scrolled || open || pathname !== "/";
+  // Home and the full-screen 3D experience start with a transparent bar over the imagery.
+  const immersive = pathname === "/" || pathname === "/experience";
+  const solid = open || (pathname === "/" ? scrolled : !immersive);
 
   return (
     <header

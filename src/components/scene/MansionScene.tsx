@@ -7,11 +7,14 @@ import { ACESFilmicToneMapping, type Group, PCFShadowMap, SRGBColorSpace } from 
 import { createMaterialLibrary, NORMAL_MAPS, type NormalTextures, prepareNormalTextures } from "@/lib/three/materialLibrary";
 import { disposeGeometryCache } from "@/lib/three/geometry";
 import type { MaterialRegistry } from "@/lib/three/materialRegistry";
-import { INSPECTION_CAMERA, RENDER_TIERS } from "@/lib/three/sceneConfiguration";
+import { RENDER_TIERS } from "@/lib/three/sceneConfiguration";
+import { type CameraMode, VIEW_PRESETS } from "@/lib/three/cameraChoreography";
+import type { CameraRig } from "@/lib/three/cameraRig";
 import type { LightingMode, RegistrySummary, RenderTier } from "@/types/scene";
 import { ArchitecturalLighting } from "./ArchitecturalLighting";
 import { EnvironmentScene } from "./EnvironmentScene";
-import { InspectionCamera } from "./InspectionCamera";
+import { CameraController } from "./CameraController";
+import type { ViewRequest } from "./FreeExploreCamera";
 import { MansionModel } from "./MansionModel";
 import { MaterialsContext } from "./Part";
 
@@ -20,12 +23,14 @@ export type MansionSceneProps = {
   tier: RenderTier;
   registry: MaterialRegistry;
   highlightPaintable: boolean;
-  resetToken: number;
+  cameraMode: CameraMode;
+  rig: CameraRig;
+  view: ViewRequest;
   reducedMotion: boolean;
   onReady: (summary: RegistrySummary) => void;
 };
 
-function SceneContent({ lighting, tier, registry, highlightPaintable, resetToken, reducedMotion, onReady }: MansionSceneProps) {
+function SceneContent({ lighting, tier, registry, highlightPaintable, cameraMode, rig, view, reducedMotion, onReady }: MansionSceneProps) {
   const normals = useTexture(NORMAL_MAPS) as NormalTextures;
   const library = useMemo(() => {
     prepareNormalTextures(normals);
@@ -57,7 +62,7 @@ function SceneContent({ lighting, tier, registry, highlightPaintable, resetToken
         <EnvironmentScene />
       </group>
       <ContactShadows frames={1} position={[0, 0.005, 2]} scale={70} resolution={tier === "low" ? 512 : 1024} blur={2.4} opacity={0.5} far={9} />
-      <InspectionCamera resetToken={resetToken} reducedMotion={reducedMotion} />
+      <CameraController mode={cameraMode} rig={rig} view={view} reducedMotion={reducedMotion} />
     </MaterialsContext.Provider>
   );
 }
@@ -69,7 +74,7 @@ export default function MansionScene(props: MansionSceneProps) {
       frameloop="demand"
       shadows={{ type: PCFShadowMap, enabled: settings.shadows }}
       dpr={settings.dpr}
-      camera={{ position: INSPECTION_CAMERA.position, fov: INSPECTION_CAMERA.fov, near: 0.5, far: 1000 }}
+      camera={{ position: VIEW_PRESETS.home.position, fov: 38, near: 0.5, far: 1000 }}
       gl={{ antialias: true, powerPreference: "high-performance", preserveDrawingBuffer: false }}
       onCreated={({ gl }) => {
         gl.toneMapping = ACESFilmicToneMapping;

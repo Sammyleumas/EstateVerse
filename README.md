@@ -10,8 +10,8 @@ An interactive 3D architectural experience. Explore a signature contemporary res
 |---|---|---|
 | 1 | Foundation: app shell, design system, navigation, landing page, routes, settings | Done |
 | 2 | 3D mansion, environment, lighting, material registry | Done |
-| 3 | Cinematic scroll camera + free 360° exploration | Next |
-| 4 | Live camera colour capture | Planned |
+| 3 | Cinematic scroll camera + free 360° exploration | Done |
+| 4 | Live camera colour capture | Next |
 | 5 | Whole-exterior colour transformation, undo/redo | Planned |
 | 6 | Colour Studio, lighting modes | Planned |
 | 7 | Save, screenshot export, design data export | Planned |
