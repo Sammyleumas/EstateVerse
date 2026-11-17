@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+/* ESTATEVERSE design tokens */
+@theme {
+  --color-ink: #0a0a0b;
+  --color-charcoal: #121214;
+  --color-graphite: #1b1b1e;
+  --color-slate: #26262a;
+  --color-line: rgb(255 255 255 / 0.1);
+  --color-line-strong: rgb(255 255 255 / 0.22);
+  --color-mist: #8d8c88;
+  --color-stone: #b9b6af;
+  --color-bone: #f3f0ea;
+  --color-champagne: #cdb48c;
+  --color-bronze: #9e7f58;
+
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter Tight Variable", "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --ease-architectural: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-rise: rise 1.2s var(--ease-architectural) both;
+  --animate-fade: fade 1.8s var(--ease-architectural) both;
+  --animate-settle: settle 2.6s var(--ease-architectural) both;
+  --animate-cue: cue 2.4s ease-in-out infinite;
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes settle {
+    from { transform: scale(1.08); }
+    to { transform: scale(1); }
+  }
+  @keyframes cue {
+    0%, 100% { transform: translateY(0); opacity: 0.35; }
+    50% { transform: translateY(7px); opacity: 1; }
+  }
+}
+
+@layer base {
+  html {
+    background: var(--color-ink);
+    color: var(--color-bone);
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-ink);
+  }
+  ::selection {
+    background: var(--color-champagne);
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-champagne);
+    outline-offset: 3px;
+  }
+}
+
+@utility eyebrow {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-mist);
+}
+
+/* Reduced motion: follows the OS setting unless the in-app preference overrides it. */
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-motion="full"]) *,
+  html:not([data-motion="full"]) *::before,
+  html:not([data-motion="full"]) *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html:not([data-motion="full"]) {
+    scroll-behavior: auto;
+  }
+}
+html[data-motion="reduced"] *,
+html[data-motion="reduced"] *::before,
+html[data-motion="reduced"] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html:not([data-motion="reduced"]) {
+    scroll-behavior: smooth;
+  }
+}
