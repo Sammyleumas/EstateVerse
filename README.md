@@ -9,8 +9,8 @@ An interactive 3D architectural experience. Explore a signature contemporary res
 | Phase | Scope | State |
 |---|---|---|
 | 1 | Foundation: app shell, design system, navigation, landing page, routes, settings | Done |
-| 2 | 3D mansion, environment, lighting, material registry | Next |
-| 3 | Cinematic scroll camera + free 360° exploration | Planned |
+| 2 | 3D mansion, environment, lighting, material registry | Done |
+| 3 | Cinematic scroll camera + free 360° exploration | Next |
 | 4 | Live camera colour capture | Planned |
 | 5 | Whole-exterior colour transformation, undo/redo | Planned |
 | 6 | Colour Studio, lighting modes | Planned |
@@ -21,7 +21,7 @@ Pages for later phases show a clearly labelled "In development" panel; no contro
 
 ## Stack
 
-Next.js 16 (App Router, Turbopack, Cache Components) · React 19 · TypeScript · Tailwind CSS 4 · Lucide icons · Three.js / React Three Fiber / drei · GSAP. Fonts are self-hosted (Fontsource Inter, Inter Tight). Photography from Unsplash, optimised by `next/image`.
+Next.js 16 (App Router, Turbopack, Cache Components) · React 19 · TypeScript · Tailwind CSS 4 · Lucide icons · Three.js / React Three Fiber / drei · GSAP. Fonts are self-hosted (Fontsource Inter, Inter Tight). Photography from Unsplash, optimised by `next/image`. HDR skies and surface normal maps are CC0 assets from `@pmndrs/assets` (see `public/CREDITS.md`).
 
 ## Run it
 
@@ -45,10 +45,13 @@ src/
   components/
     layout/              Navigation, Footer, Wordmark
     landing/             landing page sections
+    experience/          3D experience shell, lighting switcher, loading overlay
+    scene/               R3F scene: MansionModel, EnvironmentScene, ArchitecturalLighting, Part
     settings/            settings panel, preference effect
     ui/                  ButtonLink, PageHeader, PhaseNotice
   lib/
     media.ts             photography manifest
+    three/               material library + registry, geometry, scene configuration, render tiers
     preferences/         validated, persisted user preferences
   types/
 ```
@@ -56,3 +59,9 @@ src/
 ## Privacy
 
 Camera frames are processed on the device. Nothing is uploaded or stored except the colour values the user keeps. Every camera track is stopped when the capture view closes.
+
+## 3D residence
+
+The mansion is built procedurally at real scale (metres) from tagged parts. Every mesh carries `userData.estateverse = { group, category, paintable }`, and `MaterialRegistry` scans the scene to list paintable surfaces. It refuses to run if a material is shared between a paintable and a protected mesh. Turn on **Paintable** in the Experience view to see exactly which surfaces a colour will change.
+
+The scene uses on-demand rendering (frames are drawn only when something changes), three render-quality tiers chosen per device or in Settings, and all three HDRIs loaded up front so lighting changes never re-trigger loading.
