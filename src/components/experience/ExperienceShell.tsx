@@ -36,6 +36,7 @@ export function ExperienceShell() {
 
   return (
     <section aria-label="3D residence" className="relative h-[100dvh] w-full overflow-hidden bg-ink">
+      <h1 className="sr-only">The Estateverse House</h1>
       {webgl ? (
         <SceneErrorBoundary
           fallback={(_, retry) => (
@@ -80,22 +81,12 @@ export function ExperienceShell() {
         <>
           <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 z-10 h-64 bg-gradient-to-b from-ink/75 to-transparent" />
           <div aria-hidden className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-40 bg-gradient-to-t from-ink/60 to-transparent" />
-          <div className="pointer-events-none absolute inset-x-0 top-20 z-20 mx-auto flex max-w-[1440px] items-start justify-between px-5 md:top-28 md:px-10">
-            <div className="animate-rise">
-              <p className="eyebrow text-stone">Signature residence</p>
-              <h1 className="mt-2 font-display text-2xl font-light tracking-tight md:text-4xl">The Estateverse House</h1>
-            </div>
-          </div>
-
           {highlight && summary ? (
             <aside
               aria-label="Paintable surfaces"
-              className="absolute right-5 top-36 z-20 w-[min(20rem,calc(100%-2.5rem))] animate-rise border border-line bg-ink/80 p-5 backdrop-blur-md md:right-10 md:top-44"
+              className="absolute right-5 top-24 z-20 w-[min(20rem,calc(100%-2.5rem))] animate-rise border border-line bg-ink/80 p-5 backdrop-blur-md md:right-10 md:top-28"
             >
-              <p className="eyebrow mb-3 text-champagne">Paintable exterior</p>
-              <p className="mb-4 text-sm leading-relaxed text-stone">
-                Highlighted surfaces change when you apply a colour. Glass, timber, metal, stone and landscape stay as they are.
-              </p>
+              <p className="eyebrow mb-4 text-champagne">Paintable exterior</p>
               <ul className="space-y-1.5 text-sm">
                 {summary.groups
                   .filter((g) => g.paintable)
@@ -108,7 +99,7 @@ export function ExperienceShell() {
               </ul>
               <p className="mt-4 flex items-center gap-2 border-t border-line pt-4 text-xs text-mist">
                 <ShieldCheck aria-hidden className="size-4 text-champagne" strokeWidth={1.25} />
-                {summary.paintableMeshes} paintable · {summary.protectedMeshes} protected surfaces
+                Glass, timber, metal and stone protected
               </p>
             </aside>
           ) : null}
@@ -116,7 +107,7 @@ export function ExperienceShell() {
           <div className="absolute inset-x-0 bottom-0 z-20 mx-auto flex max-w-[1440px] flex-col gap-3 px-5 pb-5 md:flex-row md:items-end md:justify-between md:px-10 md:pb-8">
             <p className="hidden items-center gap-2 text-xs text-mist md:flex">
               <Hand aria-hidden className="size-4" strokeWidth={1.25} />
-              Drag to orbit · Scroll or pinch to zoom
+              Drag to explore
             </p>
             <div className="flex flex-wrap items-center gap-2">
               <LightingSwitcher value={lighting} onChange={setLighting} />

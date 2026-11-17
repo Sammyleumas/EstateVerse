@@ -7,9 +7,7 @@ export const metadata: Metadata = { title: "Settings" };
 export default function SettingsPage() {
   return (
     <>
-      <PageHeader eyebrow="Settings" title="Display and privacy.">
-        Preferences are saved in this browser. No account is needed.
-      </PageHeader>
+      <PageHeader eyebrow="Settings" title="Display and privacy." />
       <SettingsPanel />
     </>
   );

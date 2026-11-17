@@ -7,16 +7,16 @@ import { usePreferences } from "@/lib/preferences/usePreferences";
 import type { MotionPreference, RenderQuality } from "@/types/preferences";
 
 const MOTION_OPTIONS: { value: MotionPreference; label: string; hint: string }[] = [
-  { value: "system", label: "Match device", hint: "Follows your operating system's reduced-motion setting." },
-  { value: "reduced", label: "Reduced", hint: "Removes animated transitions and smooth scrolling." },
-  { value: "full", label: "Full", hint: "Always plays animations, even if your device asks for less motion." },
+  { value: "system", label: "Match device", hint: "Follows your system setting." },
+  { value: "reduced", label: "Reduced", hint: "Minimal movement." },
+  { value: "full", label: "Full", hint: "All animations on." },
 ];
 
 const QUALITY_OPTIONS: { value: RenderQuality; label: string; hint: string }[] = [
-  { value: "auto", label: "Automatic", hint: "Chosen from your device's processor, memory and screen." },
-  { value: "low", label: "Low", hint: "Standard resolution and lighter shadows. Best for older phones." },
-  { value: "balanced", label: "Balanced", hint: "Sharper image with soft shadows." },
-  { value: "high", label: "High", hint: "Full screen resolution and detailed shadows." },
+  { value: "auto", label: "Automatic", hint: "Picked for your device." },
+  { value: "low", label: "Low", hint: "For older phones." },
+  { value: "balanced", label: "Balanced", hint: "Sharper, with soft shadows." },
+  { value: "high", label: "High", hint: "Full resolution." },
 ];
 
 function OptionGroup<T extends string>({
@@ -37,7 +37,7 @@ function OptionGroup<T extends string>({
   return (
     <fieldset className="mb-10">
       <legend className="mb-2 text-lg text-bone">{legend}</legend>
-      <p className="mb-6 text-sm text-mist">{hint}</p>
+      {hint ? <p className="mb-6 text-sm text-mist">{hint}</p> : <div className="mb-4" />}
       <div className="flex flex-col gap-2">
         {options.map((option) => {
           const checked = value === option.value;
@@ -91,7 +91,7 @@ export function SettingsPanel() {
         <OptionGroup
           name={`${groupId}-motion`}
           legend="Motion"
-          hint="Applies to page animations and to camera movement in the 3D residence."
+          hint=""
           options={MOTION_OPTIONS}
           value={preferences.motion}
           onChange={(motion) => update({ motion })}
@@ -99,7 +99,7 @@ export function SettingsPanel() {
         <OptionGroup
           name={`${groupId}-quality`}
           legend="Rendering quality"
-          hint="Lower it if the 3D residence feels slow. Takes effect when the scene next opens."
+          hint=""
           options={QUALITY_OPTIONS}
           value={preferences.quality}
           onChange={(quality) => update({ quality })}
@@ -111,16 +111,15 @@ export function SettingsPanel() {
         <div className="flex gap-4 border border-line p-5">
           <ShieldCheck aria-hidden className="mt-0.5 size-5 shrink-0 text-champagne" strokeWidth={1.25} />
           <p className="leading-relaxed text-stone">
-            Camera images are processed on your device and never uploaded or stored.{" "}
+            Camera images never leave your device.{" "}
             <Link href="/about#camera-privacy" className="text-bone underline decoration-line-strong underline-offset-4 hover:decoration-bone">
-              How the camera is used
+              Learn more
             </Link>
           </p>
         </div>
 
         <div className="mt-10">
-          <h3 className="mb-2 text-lg text-bone">Data in this browser</h3>
-          <p className="mb-6 text-sm text-mist">Removes your preferences and anything else ESTATEVERSE has saved here.</p>
+          <h3 className="mb-6 text-lg text-bone">Data in this browser</h3>
           <button
             type="button"
             onClick={clearLocalData}
