@@ -30,8 +30,8 @@ export function SettingsPanel() {
   };
 
   return (
-    <div className="mx-auto grid w-full max-w-[1440px] gap-px bg-line px-5 pb-24 md:px-10 lg:grid-cols-[1fr_1fr]">
-      <section aria-labelledby={`${groupId}-display`} className="bg-ink py-10 lg:pr-12">
+    <div className="mx-auto grid w-full max-w-[1440px] px-5 pb-24 md:px-10 lg:grid-cols-2">
+      <section aria-labelledby={`${groupId}-display`} className="border-t border-line py-10 lg:pr-12">
         <h2 id={`${groupId}-display`} className="eyebrow mb-8 text-champagne">Display</h2>
         <fieldset>
           <legend className="mb-2 text-lg text-bone">Motion</legend>
@@ -71,7 +71,7 @@ export function SettingsPanel() {
         </fieldset>
       </section>
 
-      <section aria-labelledby={`${groupId}-privacy`} className="bg-ink py-10 lg:pl-12">
+      <section aria-labelledby={`${groupId}-privacy`} className="border-t border-line py-10 lg:border-l lg:pl-12">
         <h2 id={`${groupId}-privacy`} className="eyebrow mb-8 text-champagne">Privacy</h2>
         <div className="flex gap-4 border border-line p-5">
           <ShieldCheck aria-hidden className="mt-0.5 size-5 shrink-0 text-champagne" strokeWidth={1.25} />

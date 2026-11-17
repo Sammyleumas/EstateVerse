@@ -51,9 +51,9 @@ export default function AboutPage() {
           <h2 id="camera-privacy-title" className="max-w-3xl font-display text-4xl font-light tracking-tight md:text-5xl">
             How ESTATEVERSE uses your camera.
           </h2>
-          <ul className="mt-14 grid gap-px bg-line md:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-14 grid border-t border-line md:grid-cols-2 md:gap-x-10 lg:grid-cols-3">
             {CAMERA_FACTS.map(({ icon: Icon, title, body }) => (
-              <li key={title} className="bg-charcoal py-8 md:p-8">
+              <li key={title} className="border-b border-line py-8 md:py-10">
                 <Icon aria-hidden className="mb-6 size-6 text-champagne" strokeWidth={1.25} />
                 <h3 className="mb-3 text-lg text-bone">{title}</h3>
                 <p className="leading-relaxed text-stone">{body}</p>

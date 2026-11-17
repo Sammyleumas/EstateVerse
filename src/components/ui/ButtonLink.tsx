@@ -4,12 +4,12 @@ import type { ComponentProps, ReactNode } from "react";
 type Variant = "primary" | "secondary" | "ghost";
 
 const base =
-  "group inline-flex min-h-12 items-center justify-center gap-3 px-6 text-[0.75rem] font-medium uppercase tracking-[0.2em] transition-[background-color,color,border-color] duration-500 ease-[var(--ease-architectural)]";
+  "group inline-flex min-h-12 items-center justify-center gap-3 text-[0.75rem] font-medium uppercase tracking-[0.2em] transition-[background-color,color,border-color] duration-500 ease-[var(--ease-architectural)]";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-bone text-ink hover:bg-champagne",
-  secondary: "border border-line-strong text-bone hover:border-bone hover:bg-bone/5",
-  ghost: "px-0 text-stone hover:text-bone",
+  primary: "px-6 bg-bone text-ink hover:bg-champagne",
+  secondary: "px-6 border border-line-strong text-bone hover:border-bone hover:bg-bone/5",
+  ghost: "text-stone hover:text-bone",
 };
 
 export function buttonClasses(variant: Variant = "primary", extra = "") {
