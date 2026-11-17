@@ -16,8 +16,25 @@ gsap.registerPlugin(ScrollTrigger);
  * to rig progress; the 3D camera eases towards it. Chapter lines scroll naturally
  * over the fixed canvas.
  */
+/**
+ * Fade each chapter line by where it sits on screen: in from the bottom, out
+ * before it reaches the navigation. The final chapter never fades out.
+ */
+function applyFades(lines: (HTMLElement | null)[]) {
+  const h = window.innerHeight;
+  lines.forEach((line, i) => {
+    if (!line) return;
+    const top = line.getBoundingClientRect().top;
+    const fadeIn = Math.min(1, Math.max(0, (h * 0.95 - top) / (h * 0.3)));
+    const final = i === lines.length - 1;
+    const fadeOut = final ? 1 : Math.min(1, Math.max(0, (top - h * 0.1) / (h * 0.18)));
+    line.style.opacity = String(Math.min(fadeIn, fadeOut));
+  });
+}
+
 export function CinematicChapters({ rig, onExplore }: { rig: CameraRig; onExplore: () => void }) {
   const track = useRef<HTMLDivElement>(null);
+  const lines = useRef<(HTMLDivElement | null)[]>([]);
 
   useLayoutEffect(() => {
     const element = track.current;
@@ -30,8 +47,13 @@ export function CinematicChapters({ rig, onExplore }: { rig: CameraRig; onExplor
       trigger: element,
       start: "top top",
       end: "bottom bottom",
-      onUpdate: (self) => rig.setProgress(self.progress),
+      onUpdate: (self) => {
+        rig.setProgress(self.progress);
+        applyFades(lines.current);
+      },
+      onRefresh: () => applyFades(lines.current),
     });
+    applyFades(lines.current);
     return () => trigger.kill();
   }, [rig]);
 
@@ -41,7 +63,12 @@ export function CinematicChapters({ rig, onExplore }: { rig: CameraRig; onExplor
         const last = i === CHAPTERS.length - 1;
         return (
           <section key={chapter.index} className="flex h-[120svh] items-end first:h-[100svh] last:h-[100svh]">
-            <div className="chapter-line mx-auto w-full max-w-[1440px] px-5 pb-48 md:px-10 md:pb-40">
+            <div
+              ref={(node) => {
+                lines.current[i] = node;
+              }}
+              className="mx-auto w-full max-w-[1440px] px-5 pb-48 md:px-10 md:pb-40"
+            >
               <p className="eyebrow mb-4 text-stone">{chapter.index}</p>
               <h2 className="max-w-2xl font-display text-[clamp(2rem,5vw,4rem)] font-light leading-[1.02] tracking-tight [text-shadow:0_2px_24px_rgb(0_0_0/0.35)]">
                 {chapter.title}

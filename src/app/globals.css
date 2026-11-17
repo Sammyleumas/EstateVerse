@@ -97,19 +97,3 @@ html[data-motion="reduced"] *::after {
     scroll-behavior: smooth;
   }
 }
-
-/* Cinematic chapters: each line fades in from below and out before it reaches the navigation. */
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    html:not([data-motion="reduced"]) .chapter-line {
-      animation: chapter-line linear both;
-      animation-timeline: view();
-      animation-range: entry 0% exit 100%;
-    }
-  }
-}
-@keyframes chapter-line {
-  0% { opacity: 0; transform: translateY(32px); }
-  18%, 52% { opacity: 1; transform: translateY(0); }
-  72%, 100% { opacity: 0; transform: translateY(-16px); }
-}
